@@ -1314,13 +1314,18 @@ let anyCategorySelected = null; // si hay al menos un tema seleccionado
 let randomQuestions = []; // array de preguntas aleatorias
 
 //funciones
-
-const startGame = () => {
+const showQuestion = () => {
+  const questionIndex = 0;
+  const question = randomQuestions[questionIndex]; // pregunta aleatoria
+  //que me esta sirviendo para verificar en que pregunta voy?
+};
+const getRandomQuestions = () => {
   randomQuestions = [...selectedQuestions].sort(() => Math.random() - 0.5); //clona el array de preguntas seleccionadas y lo revuelve
   //cortar ese array hasta el numero de preguntas seleccionadas
   randomQuestions = randomQuestions.slice(0, numberOfQuestions);
 
   console.log(randomQuestions);
+  showQuestion();
 };
 
 const enableStartButton = () => {
@@ -1328,7 +1333,7 @@ const enableStartButton = () => {
     startButtonElement.removeAttribute('disabled'); //lo quita
     errorMessageElement.textContent = '';
   } else {
-    startButtonElement.setAttribute('disabled', ''); //lo agrega
+    startButtonElement.setAttribute('disabled', true); //lo agrega
     errorMessageElement.textContent = 'Por favor selecciona al menos un tema';
   }
 };
@@ -1375,6 +1380,6 @@ rangeElement.addEventListener('input', setQuestionsLenght);
 
 radioElements.addEventListener('change', setTimeLenght);
 
-startButtonElement.addEventListener('click', startGame);
+startButtonElement.addEventListener('click', getRandomQuestions);
 
 themesSelectElement.addEventListener('click', checkCategorySelection);
