@@ -4,9 +4,101 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="css/styles.css" />
-    <title>Document</title>
+    <title>Quizz Game</title>
   </head>
   <body>
+    <!-- primer vista -->
+    <div id="setup-view">
+      <div id="number-of-questions">
+        <h3>¿Cuántas preguntas quieres?</h3>
+        <span id="question-count">10</span>
+        <input type="range" min="5" max="30" value="10" id="question-range" />
+      </div>
+
+      <div id="time-limit">
+        <h3>¿Cuánto tiempo quieres por pregunta?</h3>
+        <div>
+          <input type="radio" name="time" id="10s" value="10" />
+          <label for="10s">10 segundos</label>
+        </div>
+        <div>
+          <input type="radio" name="time" id="20s" value="20" />
+          <label for="20s">20 segundos</label>
+        </div>
+        <div>
+          <input type="radio" name="time" id="30s" value="30" />
+          <label for="30s">30 segundos</label>
+        </div>
+        <div>
+          <input type="radio" name="time" id="60s" value="60" />
+          <label for="60s">60 segundos</label>
+        </div>
+      </div>
+
+      <div id="themes">
+        <h3>¿Qué temas quieres evaluar?</h3>
+        <div>
+          <label for="general">General</label>
+          <input type="checkbox" id="general" value="general" class="topic" />
+        </div>
+        <div>
+          <label for="science">Ciencia</label>
+          <input type="checkbox" id="science" value="science" class="topic" />
+        </div>
+        <div>
+          <label for="geography">Geografía</label>
+          <input
+            type="checkbox"
+            id="geography"
+            value="geography"
+            class="topic"
+          />
+        </div>
+        <div>
+          <label for="history">Historia</label>
+          <input type="checkbox" id="history" value="history" class="topic" />
+        </div>
+        <div>
+          <label for="art">Arte</label>
+          <input type="checkbox" id="art" value="art" class="topic" />
+        </div>
+        <div>
+          <label for="mythology">Mitología</label>
+          <input
+            type="checkbox"
+            id="mythology"
+            value="mythology"
+            class="topic"
+          />
+        </div>
+      </div>
+      <div>
+        <button id="start-button" disabled>Iniciar</button>
+        <span id="error-message" class="error-message"
+          >Selecciona al menos un tema</span
+        >
+      </div>
+    </div>
+    <!-- segunda vista -->
+    <div id="game-view" class="view">
+      <h2 id="question-text">Pregunta</h2>
+      <div id="answers">
+        <p class="answer">RESPUESTA</p>
+        <p class="answer">RESPUESTA</p>
+        <p class="answer">RESPUESTA</p>
+        <p class="answer">RESPUESTA</p>
+      </div>
+      <p>Tiempo restante: <span id="timer">0s</span></p>
+    </div>
+
+    <!-- 🏁 VISTA 3: RESULTADOS -->
+    <div id="results-view" class="view">
+      <h2>Resultados</h2>
+      <span>Correctas: <span id="correct">0</span></span>
+      <span>Incorrectas: <span id="incorrect">0</span></span>
+      <span>No contestaste a tiempo: <span id="unanswered">0</span></span>
+      <button id="restart-buttonn">Reiniciar</button>
+    </div>
     <script src="./js/scripts.js"></script>
   </body>
 </html>
