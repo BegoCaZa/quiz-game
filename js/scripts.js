@@ -1341,7 +1341,9 @@ const checkThemeSelection = () => {
     const theme = checkboxes[i].value; //obtiene el valor del checkbox
     const questionsFromThemes = QUESTIONS[theme]; //mete las preguntas de ese tema
     selectedQuestions.push(...questionsFromThemes); //agrega las preguntas al array de preguntas seleccionadas
+    console.log(theme);
   }
+
   enableStartButton(); //verifica si se cumplen las condiciones para habilitar el boton de inicio
 };
 
