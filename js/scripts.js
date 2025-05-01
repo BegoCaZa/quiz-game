@@ -1288,6 +1288,7 @@ const gameViewElement = document.getElementById('game-view');
 const resultsViewElement = document.getElementById('results-view');
 
 const radioElements = document.getElementById('time-limit');
+const themesSelectElement = document.getElementById('themes');
 const startButtonElement = document.getElementById('start-button');
 const restartButtonElement = document.getElementById('restart-button');
 const errorMessageElement = document.getElementById('error-message');
@@ -1308,29 +1309,63 @@ const unansweredElement = document.getElementById('unanswered');
 let selectedQuestions = []; // array de preguntas seleccionadas
 let numberOfQuestions = 0; // numero de preguntas seleccionadas
 let timeSelected = null; // tiempo seleccionado
+let anyThemeSelected = null; // si hay al menos un tema seleccionado
 
 //funciones
 
-//guardar el numero de preguntas y tiempo
-const setQuestionsLenght = () => {
-  rangeDisplayElement.textContent = rangeElement.value; //el mismo que el valor del input
-  numberOfQuestions = rangeElement.value;
+const startGame = () => {
+  console.log('Iniciando juego...');
 };
 
-const setTimeLenght = event => {
-  const timeSelected = event.target.value;
-  console.log(timeSelected);
-
-  if (!timeSelected) {
-    errorMessageElement.textContent = 'Por favor selecciona un tiempo';
-    return;
+const enableStartButton = () => {
+  if (numberOfQuestions > 0 && timeSelected && anyThemeSelected) {
+    startButtonElement.removeAttribute('disabled');
+    errorMessageElement.textContent = '';
+  } else {
+    startButtonElement.setAttribute('disabled');
+    errorMessageElement.textContent = 'Por favor selecciona al menos un tema';
   }
 };
 
-setQuestionsLenght();
-setTimeLenght();
+const checkThemeSelection = () => {
+  const checkboxes = document.querySelectorAll('.topic:checked'); //que solo traiga los seleccionados
+  selectedQuestions = []; //reinicia el array de preguntas seleccionadas
+
+  if (checkboxes.length === 0) {
+    anyThemeSelected = false; //si hay al menos un tema seleccionado
+  } else {
+    anyThemeSelected = true; // Si no hay temas seleccionados
+  }
+
+  for (let i = 0; i < checkboxes.length; i++) {
+    const theme = checkboxes[i].value; //obtiene el valor del checkbox
+    const questionsFromThemes = QUESTIONS[theme]; //mete las preguntas de ese tema
+    selectedQuestions.push(...questionsFromThemes); //agrega las preguntas al array de preguntas seleccionadas
+  }
+  enableStartButton(anyThemeSelected); //verifica si se cumplen las condiciones para habilitar el boton de inicio
+};
+
+const setQuestionsLenght = () => {
+  rangeDisplayElement.textContent = rangeElement.value; //el mismo que el valor del input
+  numberOfQuestions = rangeElement.value;
+  console.log(numberOfQuestions);
+  enableStartButton(numberOfQuestions); //verifica si se cumplen las condiciones para habilitar el boton de inicio
+};
+
+const setTimeLenght = event => {
+  timeSelected = event.target.value;
+  console.log(timeSelected);
+
+  enableStartButton(timeSelected); //verifica si se cumplen las condiciones para habilitar el boton de inicio
+};
 
 //EVENTOS
 rangeElement.addEventListener('input', setQuestionsLenght);
 
 radioElements.addEventListener('change', setTimeLenght);
+
+startButtonElement.addEventListener('click', startGame);
+
+themesSelectElement.addEventListener('click', checkThemeSelection);
+
+startButtonElement.addEventListener('click', startGame);
