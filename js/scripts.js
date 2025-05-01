@@ -1288,7 +1288,7 @@ const gameViewElement = document.getElementById('game-view');
 const resultsViewElement = document.getElementById('results-view');
 
 const radioElements = document.getElementById('time-limit');
-const themesSelectElement = document.getElementById('themes');
+const themesSelectElement = document.getElementById('categories');
 const startButtonElement = document.getElementById('start-button');
 const restartButtonElement = document.getElementById('restart-button');
 const errorMessageElement = document.getElementById('error-message');
@@ -1309,16 +1309,22 @@ const unansweredElement = document.getElementById('unanswered');
 let selectedQuestions = []; // array de preguntas seleccionadas
 let numberOfQuestions = 0; // numero de preguntas seleccionadas
 let timeSelected = null; // tiempo seleccionado
-let anyThemeSelected = null; // si hay al menos un tema seleccionado
+let anyCategorySelected = null; // si hay al menos un tema seleccionado
+
+let randomQuestions = []; // array de preguntas aleatorias
 
 //funciones
 
 const startGame = () => {
-  console.log('Iniciando juego...');
+  randomQuestions = [...selectedQuestions].sort(() => Math.random() - 0.5); //clona el array de preguntas seleccionadas y lo revuelve
+  //cortar ese array hasta el numero de preguntas seleccionadas
+  randomQuestions = randomQuestions.slice(0, numberOfQuestions);
+
+  console.log(randomQuestions);
 };
 
 const enableStartButton = () => {
-  if (numberOfQuestions > 0 && timeSelected && anyThemeSelected) {
+  if (numberOfQuestions > 0 && timeSelected && anyCategorySelected) {
     startButtonElement.removeAttribute('disabled'); //lo quita
     errorMessageElement.textContent = '';
   } else {
@@ -1327,22 +1333,25 @@ const enableStartButton = () => {
   }
 };
 
-const checkThemeSelection = () => {
+const checkCategorySelection = () => {
   const checkboxes = document.querySelectorAll('.topic:checked'); //que solo traiga los seleccionados
   selectedQuestions = []; //reinicia el array de preguntas seleccionadas
 
   if (checkboxes.length === 0) {
-    anyThemeSelected = false; //si hay al menos un tema seleccionado
+    anyCategorySelected = false; //si hay al menos un tema seleccionado
   } else {
-    anyThemeSelected = true; // Si no hay temas seleccionados
+    anyCategorySelected = true; // Si no hay temas seleccionados
+
+    //nuevo banco de preguntas
+    checkboxes.forEach(checkbox => {
+      const category = checkbox.value; // detecta el nombre de la categoria
+      const questionsFromCategory = QUESTIONS[category]; // separa esas preguntas
+      selectedQuestions.push(...questionsFromCategory); // mete las preguntas al array de preguntas seleccionadas
+    }); //yei creo que si sirveee wuuu me la pela la infeccion
   }
 
-  for (let i = 0; i < checkboxes.length; i++) {
-    const theme = checkboxes[i].value; //obtiene el valor del checkbox
-    const questionsFromThemes = QUESTIONS[theme]; //mete las preguntas de ese tema
-    selectedQuestions.push(...questionsFromThemes); //agrega las preguntas al array de preguntas seleccionadas
-    console.log(theme);
-  }
+  console.log(selectedQuestions); //array de preguntas seleccionadas
+  //aqui ya actualice el array
 
   enableStartButton(); //verifica si se cumplen las condiciones para habilitar el boton de inicio
 };
@@ -1368,4 +1377,4 @@ radioElements.addEventListener('change', setTimeLenght);
 
 startButtonElement.addEventListener('click', startGame);
 
-themesSelectElement.addEventListener('click', checkThemeSelection);
+themesSelectElement.addEventListener('click', checkCategorySelection);
