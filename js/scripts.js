@@ -1319,10 +1319,10 @@ const startGame = () => {
 
 const enableStartButton = () => {
   if (numberOfQuestions > 0 && timeSelected && anyThemeSelected) {
-    startButtonElement.removeAttribute('disabled');
+    startButtonElement.removeAttribute('disabled'); //lo quita
     errorMessageElement.textContent = '';
   } else {
-    startButtonElement.setAttribute('disabled');
+    startButtonElement.setAttribute('disabled', ''); //lo agrega
     errorMessageElement.textContent = 'Por favor selecciona al menos un tema';
   }
 };
@@ -1342,21 +1342,21 @@ const checkThemeSelection = () => {
     const questionsFromThemes = QUESTIONS[theme]; //mete las preguntas de ese tema
     selectedQuestions.push(...questionsFromThemes); //agrega las preguntas al array de preguntas seleccionadas
   }
-  enableStartButton(anyThemeSelected); //verifica si se cumplen las condiciones para habilitar el boton de inicio
+  enableStartButton(); //verifica si se cumplen las condiciones para habilitar el boton de inicio
 };
 
 const setQuestionsLenght = () => {
   rangeDisplayElement.textContent = rangeElement.value; //el mismo que el valor del input
   numberOfQuestions = rangeElement.value;
   console.log(numberOfQuestions);
-  enableStartButton(numberOfQuestions); //verifica si se cumplen las condiciones para habilitar el boton de inicio
+  enableStartButton(); //verifica si se cumplen las condiciones para habilitar el boton de inicio
 };
 
 const setTimeLenght = event => {
   timeSelected = event.target.value;
   console.log(timeSelected);
 
-  enableStartButton(timeSelected); //verifica si se cumplen las condiciones para habilitar el boton de inicio
+  enableStartButton(); //verifica si se cumplen las condiciones para habilitar el boton de inicio
 };
 
 //EVENTOS
@@ -1367,5 +1367,3 @@ radioElements.addEventListener('change', setTimeLenght);
 startButtonElement.addEventListener('click', startGame);
 
 themesSelectElement.addEventListener('click', checkThemeSelection);
-
-startButtonElement.addEventListener('click', startGame);
