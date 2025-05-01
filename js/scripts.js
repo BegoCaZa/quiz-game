@@ -1287,8 +1287,9 @@ const setupViewElement = document.getElementById('setup-view');
 const gameViewElement = document.getElementById('game-view');
 const resultsViewElement = document.getElementById('results-view');
 
+const radioElements = document.getElementById('time-limit');
 const startButtonElement = document.getElementById('start-button');
-const restartButtonElement = document.getElementById('restart-buttonn');
+const restartButtonElement = document.getElementById('restart-button');
 const errorMessageElement = document.getElementById('error-message');
 
 const rangeElement = document.getElementById('question-range');
@@ -1305,3 +1306,31 @@ const unansweredElement = document.getElementById('unanswered');
 
 //variables
 let selectedQuestions = []; // array de preguntas seleccionadas
+let numberOfQuestions = 0; // numero de preguntas seleccionadas
+let timeSelected = null; // tiempo seleccionado
+
+//funciones
+
+//guardar el numero de preguntas y tiempo
+const setQuestionsLenght = () => {
+  rangeDisplayElement.textContent = rangeElement.value; //el mismo que el valor del input
+  numberOfQuestions = rangeElement.value;
+};
+
+const setTimeLenght = event => {
+  const timeSelected = event.target.value;
+  console.log(timeSelected);
+
+  if (!timeSelected) {
+    errorMessageElement.textContent = 'Por favor selecciona un tiempo';
+    return;
+  }
+};
+
+setQuestionsLenght();
+setTimeLenght();
+
+//EVENTOS
+rangeElement.addEventListener('input', setQuestionsLenght);
+
+radioElements.addEventListener('change', setTimeLenght);
