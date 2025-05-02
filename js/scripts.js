@@ -1338,7 +1338,7 @@ const goToNextQuestion = () => {
 
 const checkAnswer = event => {
   const selectedAnswer = event.target.textContent; // respuesta seleccionada
-  const question = randomQuestions[questionIndex]; // pregunta actual
+  const question = randomQuestions[questionIndex]; // pregunta actual //?porque no me funciona si saco la variable de aqui y la declaro arriba?
   //verifica si la respuesta seleccionada es correcta
   const isCorrect = selectedAnswer === question.answer;
   if (isCorrect) {
@@ -1365,9 +1365,8 @@ const showQuestion = () => {
   question.options.forEach(option => {
     const answerOption = document.createElement('p');
     answerOption.textContent = option;
-    answerOption.classList.add('answer-button'); //estilo diferente...luego considero si es relevante jeje
-
-    answerOption.addEventListener('click', checkAnswer); //cada opcion debe verificarse con un evento
+    answerOption.classList.add('answer-button');
+    answerOption.addEventListener('click', checkAnswer); //cada opcion debe verificarse con un evento ---de aqui, salta a la siguiente funcion para verificar la respuesta
     answersContainerElement.append(answerOption);
   });
 };
