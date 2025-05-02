@@ -1355,7 +1355,7 @@ const enableStartButton = () => {
 };
 
 const checkCategorySelection = () => {
-  const checkboxes = document.querySelectorAll('.topic:checked'); //que solo traiga los seleccionados
+  const checkboxes = document.querySelectorAll('.checkbox-input:checked'); //que solo traiga los seleccionados
   selectedQuestions = []; //reinicia el array de preguntas seleccionadas
 
   if (checkboxes.length === 0) {

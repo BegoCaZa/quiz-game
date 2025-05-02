@@ -3,89 +3,152 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
+      rel="stylesheet"
+    />
     <link rel="stylesheet" href="css/styles.css" />
     <title>Quizz Game</title>
   </head>
   <body>
+    <h1 class="title">QUIZZ GAME</h1>
     <!-- primer vista -->
-    <div id="setup-view">
+    <div id="setup-view" class="setup-view">
       <div id="number-of-questions">
         <h3>¿Cuántas preguntas quieres?</h3>
         <span id="question-count">10</span>
-        <input type="range" min="5" max="30" value="10" id="question-range" />
+        <input
+          type="range"
+          min="5"
+          max="30"
+          value="10"
+          id="question-range"
+          class="range-input"
+        />
       </div>
 
       <div id="time-limit">
         <h3>¿Cuánto tiempo quieres por pregunta?</h3>
-        <div>
-          <input type="radio" name="time" id="10s" value="10" />
-          <label for="10s">10 segundos</label>
-        </div>
-        <div>
-          <input type="radio" name="time" id="20s" value="20" />
-          <label for="20s">20 segundos</label>
-        </div>
-        <div>
-          <input type="radio" name="time" id="30s" value="30" />
-          <label for="30s">30 segundos</label>
-        </div>
-        <div>
-          <input type="radio" name="time" id="60s" value="60" />
-          <label for="60s">60 segundos</label>
+        <div class="radio-options-container">
+          <div class="radio-option">
+            <input
+              type="radio"
+              name="time"
+              id="10s"
+              value="10"
+              class="radio-input"
+            />
+            <label for="10s" class="radio-label">10s</label>
+          </div>
+          <div class="radio-option">
+            <input
+              type="radio"
+              name="time"
+              id="20s"
+              value="20"
+              class="radio-input"
+            />
+            <label for="20s" class="radio-label">20s</label>
+          </div>
+          <div class="radio-option">
+            <input
+              type="radio"
+              name="time"
+              id="30s"
+              value="30"
+              class="radio-input"
+            />
+            <label for="30s" class="radio-label">30s</label>
+          </div>
+          <div class="radio-option">
+            <input
+              type="radio"
+              name="time"
+              id="60s"
+              value="60"
+              class="radio-input"
+            />
+            <label for="60s" class="radio-label">60s</label>
+          </div>
         </div>
       </div>
 
       <div id="categories">
         <h3>¿Qué temas quieres evaluar?</h3>
-        <div>
-          <label for="general">General</label>
-          <input type="checkbox" id="general" value="general" class="topic" />
-        </div>
-        <div>
-          <label for="science">Ciencia</label>
-          <input type="checkbox" id="science" value="science" class="topic" />
-        </div>
-        <div>
-          <label for="geography">Geografía</label>
-          <input
-            type="checkbox"
-            id="geography"
-            value="geography"
-            class="topic"
-          />
-        </div>
-        <div>
-          <label for="history">Historia</label>
-          <input type="checkbox" id="history" value="history" class="topic" />
-        </div>
-        <div>
-          <label for="art">Arte</label>
-          <input type="checkbox" id="art" value="art" class="topic" />
-        </div>
-        <div>
-          <label for="mythology">Mitología</label>
-          <input
-            type="checkbox"
-            id="mythology"
-            value="mythology"
-            class="topic"
-          />
+        <div class="categories-container">
+          <div>
+            <input
+              type="checkbox"
+              id="general"
+              value="general"
+              class="checkbox-input"
+            />
+            <label for="general" class="checkbox-label">General</label>
+          </div>
+          <div>
+            <input
+              type="checkbox"
+              id="science"
+              value="science"
+              class="checkbox-input"
+            />
+            <label for="science" class="checkbox-label">Ciencia</label>
+          </div>
+          <div>
+            <input
+              type="checkbox"
+              id="geography"
+              value="geography"
+              class="checkbox-input"
+            />
+            <label for="geography" class="checkbox-label">Geografía</label>
+          </div>
+          <div>
+            <input
+              type="checkbox"
+              id="history"
+              value="history"
+              class="checkbox-input"
+            />
+            <label for="history" class="checkbox-label">Historia</label>
+          </div>
+          <div>
+            <input
+              type="checkbox"
+              id="art"
+              value="art"
+              class="checkbox-input"
+            />
+            <label for="art" class="checkbox-label">Arte</label>
+          </div>
+          <div>
+            <input
+              type="checkbox"
+              id="mythology"
+              value="mythology"
+              class="checkbox-input"
+            />
+            <label for="mythology" class="checkbox-label">Mitología</label>
+          </div>
         </div>
       </div>
-      <div>
-        <button id="start-button" disabled>Iniciar</button>
+
+      <div class="start-button-container">
+        <button id="start-button" disabled class="start-button">Iniciar</button>
         <span id="error-message" class="error-message"></span>
       </div>
     </div>
     <!-- segunda vista -->
-    <div id="game-view" class="view">
+    <div id="game-view" class="view hide">
       <h2 id="question-text">Pregunta</h2>
       <div id="answers"></div>
       <p>Tiempo restante: <span id="timer">0s</span></p>
     </div>
 
     <!-- 🏁 VISTA 3: RESULTADOS -->
-    <div id="results-view" class="view">
+    <div id="results-view" class="view hide">
       <h2>Resultados</h2>
       <span>Correctas: <span id="correct">0</span></span>
       <span>Incorrectas: <span id="incorrect">0</span></span>

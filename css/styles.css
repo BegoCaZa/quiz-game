@@ -1,3 +1,11 @@
+:root {
+  --font-size-small: 14px;
+  --font-size-medium: 20px;
+  --font-size-large: 24px;
+  --font-size-error: 12px;
+
+  --color-babyBlue: #4da6ff;
+}
 * {
   box-sizing: border-box;
 }
@@ -24,5 +32,125 @@ nav ul {
 
 body {
   margin: 0;
-  font-family: sans-serif;
+  font-family: 'Montserrat', sans-serif;
+  background-color: #4da6ff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: var(--font-size-small);
+  padding: 20px;
+}
+
+.title {
+  background-color: aliceblue;
+  padding: 20px;
+  font-size: 30px;
+  text-align: center;
+  display: inline-block;
+  border-radius: 20px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+.setup-view {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 30px;
+  width: 90%;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  text-align: center;
+}
+
+.range-input {
+  accent-color: var(--color-babyBlue);
+  height: 5px;
+  width: 85%;
+}
+
+.radio-options-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  gap: 15px;
+  width: 100%;
+}
+/* estilo del radio */
+
+.radio-input {
+  display: none;
+}
+
+.radio-label {
+  background-color: #9f9f9f;
+  padding: 10px 10px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: bold;
+  color: white;
+}
+
+.radio-input:checked + .radio-label {
+  background-color: #4da6ff;
+  color: white;
+}
+
+.categories-container {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 25px;
+}
+
+/* checkbox */
+.checkbox-input {
+  display: none;
+}
+
+.checkbox-label {
+  background-color: #9f9f9f;
+  padding: 8px 10px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-weight: bold;
+  color: white;
+}
+.checkbox-input:checked + .checkbox-label {
+  background-color: #4da6ff;
+  color: white;
+}
+
+.start-button-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+}
+.error-message {
+  color: red;
+  font-size: var(--font-size-error);
+  margin-top: 10px;
+}
+
+.start-button {
+  background-color: var(--color-babyBlue);
+  border: none;
+  padding: 10px 20px;
+  border-radius: 10px;
+  font-size: 18px;
+  font-weight: bold;
+  color: white;
+  margin-top: 5px;
+}
+.start-button:disabled {
+  background-color: rgba(0, 0, 0, 0.1);
+  color: #888;
+  cursor: not-allowed;
+  pointer-events: none;
+  opacity: 0.6;
+}
+
+.hide {
+  display: none;
 }
