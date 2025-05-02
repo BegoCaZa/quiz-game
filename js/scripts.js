@@ -1358,19 +1358,18 @@ const showQuestion = () => {
   const question = randomQuestions[questionIndex]; // pregunta aleatoria
   //que me esta sirviendo para verificar en que pregunta voy? RANDOM QUESTIONS!
 
-  while (questionIndex < randomQuestions.length) {
-    //mientras el indice sea menor al largo de las preguntas aleatorias
-    questionTextElement.textContent = question.question; // pregunta
-    answersContainerElement.textContent = ''; // limpia el contenedor de respuestas
+  //habia usado while pero como debo esperar a que el usuario interactue, no me sirve que sea un bucle
+  questionTextElement.textContent = question.question; // pregunta
+  answersContainerElement.textContent = ''; // limpia el contenedor de respuestas
 
-    question.options.forEach(option => {
-      const answerOption = document.createElement('p');
-      answerOption.textContent = option;
-      answerOption.classList.add('answer-button'); //estilo diferente...luego considero si es relevante jeje
-      answersContainerElement.append(answerOption);
-      answerOption.addEventListener('click', checkAnswer); //cada opcion debe verificarse con un evento
-    });
-  }
+  question.options.forEach(option => {
+    const answerOption = document.createElement('p');
+    answerOption.textContent = option;
+    answerOption.classList.add('answer-button'); //estilo diferente...luego considero si es relevante jeje
+
+    answerOption.addEventListener('click', checkAnswer); //cada opcion debe verificarse con un evento
+    answersContainerElement.append(answerOption);
+  });
 };
 
 const getRandomQuestions = () => {
