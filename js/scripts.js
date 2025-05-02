@@ -1315,6 +1315,8 @@ let randomQuestions = []; // array de preguntas aleatorias
 
 //funciones
 const showQuestion = () => {
+  setupViewElement.classList.add('hide'); //oculta la vista de setup
+  gameViewElement.classList.remove('hide'); //muestra la vista de juego
   const questionIndex = 0;
   const question = randomQuestions[questionIndex]; // pregunta aleatoria
   //que me esta sirviendo para verificar en que pregunta voy? RANDOM QUESTIONS! YA tienen ese largo, bien Bego, bien
