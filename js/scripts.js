@@ -1312,31 +1312,67 @@ let timeSelected = null; // tiempo seleccionado
 let anyCategorySelected = null; // si hay al menos un tema seleccionado
 
 let randomQuestions = []; // array de preguntas aleatorias
+let questionIndex = 0; //llevar la cuenta de la pregunta actual
+let correctAnswers = 0; // contador de respuestas correctas
+let incorrectAnswers = 0; // contador de respuestas incorrectas
+let unanswered = 0; // contador de preguntas sin responder
 
-//funciones
+const showResults = () => {
+  gameViewElement.classList.add('hide'); //oculta la vista de juego
+  resultsViewElement.classList.remove('hide'); //muestra la vista de resultados
+
+  correctAnswersElement.textContent = correctAnswers; //muestra el contador de respuestas correctas
+  incorrectAnswersElement.textContent = incorrectAnswers; //muestra el contador de respuestas incorrectas
+  unansweredElement.textContent = unanswered; //muestra el contador de preguntas sin responder
+};
+
+const goToNextQuestion = () => {
+  questionIndex++; //avanza el indice de la pregunta
+
+  if (questionIndex < randomQuestions.length) {
+    showQuestion(); //muestra la siguiente pregunta
+  } else {
+    showResults(); //muestra los resultados
+  }
+};
+
+const checkAnswer = event => {
+  const selectedAnswer = event.target.textContent; // respuesta seleccionada
+  const question = randomQuestions[questionIndex]; // pregunta actual
+  //verifica si la respuesta seleccionada es correcta
+  const isCorrect = selectedAnswer === question.answer;
+  if (isCorrect) {
+    correctAnswers++; //incrementa el contador de respuestas correctas
+  }
+  if (!isCorrect) {
+    incorrectAnswers++; //incrementa el contador de respuestas incorrectas
+  }
+
+  goToNextQuestion(); //llama a la funcion para ir a la siguiente pregunta
+};
+
 const showQuestion = () => {
   setupViewElement.classList.add('hide'); //oculta la vista de setup
   gameViewElement.classList.remove('hide'); //muestra la vista de juego
-  const questionIndex = 0;
+
   const question = randomQuestions[questionIndex]; // pregunta aleatoria
-  //que me esta sirviendo para verificar en que pregunta voy? RANDOM QUESTIONS! YA tienen ese largo, bien Bego, bien
+  //que me esta sirviendo para verificar en que pregunta voy? RANDOM QUESTIONS!
 
   while (questionIndex < randomQuestions.length) {
     //mientras el indice sea menor al largo de las preguntas aleatorias
     questionTextElement.textContent = question.question; // pregunta
-    // answersContainerElement.innerHTML = ''; // limpia el contenedor de respuestas
+    answersContainerElement.textContent = ''; // limpia el contenedor de respuestas
 
     question.options.forEach(option => {
       const answerOption = document.createElement('p');
       answerOption.textContent = option;
       answerOption.classList.add('answer-button'); //estilo diferente...luego considero si es relevante jeje
       answersContainerElement.append(answerOption);
-      //   answerOption.addEventListener('click', checkAnswer); //cada opcion debe verificarse con un evento
+      answerOption.addEventListener('click', checkAnswer); //cada opcion debe verificarse con un evento
     });
-
-    questionIndex++; //avanzo
   }
 };
+
 const getRandomQuestions = () => {
   randomQuestions = [...selectedQuestions].sort(() => Math.random() - 0.5); //clona el array de preguntas seleccionadas y lo revuelve
   //cortar ese array hasta el numero de preguntas seleccionadas
