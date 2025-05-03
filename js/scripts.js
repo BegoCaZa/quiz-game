@@ -1307,7 +1307,7 @@ const unansweredElement = document.getElementById('unanswered');
 
 //variables
 let selectedQuestions = []; // array de preguntas seleccionadas
-let numberOfQuestions = 0; // numero de preguntas seleccionadas
+let numberOfQuestions = rangeElement.value; // numero de preguntas seleccionadas
 let timeSelected = null; // tiempo seleccionado
 let anyCategorySelected = null; // si hay al menos un tema seleccionado
 
@@ -1316,6 +1316,7 @@ let questionIndex = 0; //llevar la cuenta de la pregunta actual
 let correctAnswers = 0; // contador de respuestas correctas
 let incorrectAnswers = 0; // contador de respuestas incorrectas
 let unanswered = 0; // contador de preguntas sin responder
+let countdown = null; //timer (lo dejare null por que no lo tengo definido aun)
 
 const showResults = () => {
   gameViewElement.classList.add('hide'); //oculta la vista de juego
@@ -1328,6 +1329,7 @@ const showResults = () => {
 
 const goToNextQuestion = () => {
   questionIndex++; //avanza el indice de la pregunta
+  clearInterval(countdown); //reinicia el contador
 
   if (questionIndex < randomQuestions.length) {
     showQuestion(); //muestra la siguiente pregunta
@@ -1338,7 +1340,7 @@ const goToNextQuestion = () => {
 
 const checkAnswer = event => {
   const selectedAnswer = event.target.textContent; // respuesta seleccionada
-  const question = randomQuestions[questionIndex]; // pregunta actual //?porque no me funciona si saco la variable de aqui y la declaro arriba?
+  const question = getCurrentQuestion(); // pregunta aleatoria
   //verifica si la respuesta seleccionada es correcta
   const isCorrect = selectedAnswer === question.answer;
   if (isCorrect) {
@@ -1351,11 +1353,27 @@ const checkAnswer = event => {
   goToNextQuestion(); //llama a la funcion para ir a la siguiente pregunta
 };
 
+const startTimer = () => {
+  let timeLeft = timeSelected; // tiempo restante
+  timerDisplayElement.textContent = timeLeft; //muestra el tiempo restante
+
+  countdown = setInterval(() => {
+    //mi cuenta regresiva
+    timeLeft--; // va restando
+    timerDisplayElement.textContent = timeLeft; //actualiza el tiempo restante
+    if (timeLeft <= 0) {
+      clearInterval(countdown); //lo regresa a cero
+      unanswered++; //incrementa el contador de preguntas sin responder
+      goToNextQuestion(); //pasa a la siguiente pregunta
+    }
+  }, 1000); //actualiza cada segundo
+};
+
 const showQuestion = () => {
   setupViewElement.classList.add('hide'); //oculta la vista de setup
   gameViewElement.classList.remove('hide'); //muestra la vista de juego
 
-  const question = randomQuestions[questionIndex]; // pregunta aleatoria
+  let question = getCurrentQuestion(); // pregunta aleatoria
   //que me esta sirviendo para verificar en que pregunta voy? RANDOM QUESTIONS!
 
   //habia usado while pero como debo esperar a que el usuario interactue, no me sirve que sea un bucle
@@ -1369,6 +1387,13 @@ const showQuestion = () => {
     answerOption.addEventListener('click', checkAnswer); //cada opcion debe verificarse con un evento ---de aqui, salta a la siguiente funcion para verificar la respuesta
     answersContainerElement.append(answerOption);
   });
+
+  startTimer(); //cuenta regresiva
+};
+
+const getCurrentQuestion = () => {
+  const currentQuestion = randomQuestions[questionIndex]; // pregunta aleatoria
+  return currentQuestion; //devuelve la pregunta actual
 };
 
 const getRandomQuestions = () => {
@@ -1381,7 +1406,7 @@ const getRandomQuestions = () => {
 };
 
 const enableStartButton = () => {
-  if (numberOfQuestions > 0 && timeSelected && anyCategorySelected) {
+  if (numberOfQuestions && timeSelected && anyCategorySelected) {
     startButtonElement.removeAttribute('disabled'); //lo quita
     errorMessageElement.textContent = '';
   } else {
@@ -1415,7 +1440,6 @@ const checkCategorySelection = () => {
 
 const setQuestionsLenght = () => {
   rangeDisplayElement.textContent = rangeElement.value; //el mismo que el valor del input
-  numberOfQuestions = rangeElement.value;
   console.log(numberOfQuestions);
   enableStartButton(); //verifica si se cumplen las condiciones para habilitar el boton de inicio
 };
@@ -1426,7 +1450,7 @@ const setTimeLenght = event => {
 
   enableStartButton(); //verifica si se cumplen las condiciones para habilitar el boton de inicio
 };
-
+// console.log(numberOfQuestions); verificar si empieza con 10 preguntas
 //EVENTOS
 rangeElement.addEventListener('input', setQuestionsLenght);
 
