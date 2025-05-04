@@ -1318,6 +1318,50 @@ let incorrectAnswers = 0; // contador de respuestas incorrectas
 let unanswered = 0; // contador de preguntas sin responder
 let countdown = null; //timer (lo dejare null por que no lo tengo definido aun)
 
+const restartGame = () => {
+  //quiero que todo vuelva a estar como el principio
+
+  //respuestas
+  correctAnswers = 0;
+  incorrectAnswers = 0;
+  unanswered = 0;
+
+  //banco de preguntas
+  randomQuestions = [];
+  selectedQuestions = [];
+  questionIndex = 0;
+
+  //settings del usuario
+  rangeElement.value = 10; //como al principio
+  numberOfQuestions = rangeElement.value;
+  rangeDisplayElement.textContent = rangeElement.value;
+  timeSelected = null;
+  anyCategorySelected = null;
+
+  //timer
+  countdown = null;
+
+  //oculta la vista de resultados
+  resultsViewElement.classList.add('hide');
+  setupViewElement.classList.remove('hide');
+
+  //tambien debo quitar el check de los checkboxes
+  const checkedRadios = document.querySelectorAll('.radio-input:checked');
+  checkedRadios.forEach(radio => {
+    radio.checked = false;
+  });
+
+  const checkedCheckboxes = document.querySelectorAll(
+    '.checkbox-input:checked'
+  );
+  checkedCheckboxes.forEach(checkbox => {
+    checkbox.checked = false; //reinicia los checkboxes
+  });
+
+  //deshabilitar el boton de inicio
+  startButtonElement.setAttribute('disabled', true);
+};
+
 const showResults = () => {
   gameViewElement.classList.add('hide'); //oculta la vista de juego
   resultsViewElement.classList.remove('hide'); //muestra la vista de resultados
@@ -1325,6 +1369,8 @@ const showResults = () => {
   correctAnswersElement.textContent = correctAnswers; //muestra el contador de respuestas correctas
   incorrectAnswersElement.textContent = incorrectAnswers; //muestra el contador de respuestas incorrectas
   unansweredElement.textContent = unanswered; //muestra el contador de preguntas sin responder
+
+  restartButtonElement.addEventListener('click', restartGame); //reinicia el juego
 };
 
 const goToNextQuestion = () => {
@@ -1440,12 +1486,14 @@ const checkCategorySelection = () => {
 
 const setQuestionsLenght = () => {
   rangeDisplayElement.textContent = rangeElement.value; //el mismo que el valor del input
+  numberOfQuestions = rangeElement.value;
   console.log(numberOfQuestions);
   enableStartButton(); //verifica si se cumplen las condiciones para habilitar el boton de inicio
 };
 
 const setTimeLenght = event => {
   timeSelected = event.target.value;
+
   console.log(timeSelected);
 
   enableStartButton(); //verifica si se cumplen las condiciones para habilitar el boton de inicio
