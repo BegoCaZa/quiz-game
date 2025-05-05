@@ -1401,6 +1401,7 @@ const checkAnswer = event => {
 
 const startTimer = () => {
   let timeLeft = timeSelected; // tiempo restante
+  timerDisplayElement.classList.add('timer'); //estilo del timer
   timerDisplayElement.textContent = timeLeft; //muestra el tiempo restante
 
   countdown = setInterval(() => {
