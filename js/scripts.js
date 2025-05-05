@@ -1426,13 +1426,15 @@ const showQuestion = () => {
   questionTextElement.textContent = question.question; // pregunta
   answersContainerElement.textContent = ''; // limpia el contenedor de respuestas
 
-  question.options.forEach(option => {
-    const answerOption = document.createElement('p');
-    answerOption.textContent = option;
-    answerOption.classList.add('answer-button');
-    answerOption.addEventListener('click', checkAnswer); //cada opcion debe verificarse con un evento ---de aqui, salta a la siguiente funcion para verificar la respuesta
-    answersContainerElement.append(answerOption);
-  });
+  question.options
+    .sort(() => Math.random() - 0.5) //las desordeno para que no sea la primera siempre la correcta
+    .forEach(option => {
+      const answerOption = document.createElement('p');
+      answerOption.textContent = option;
+      answerOption.classList.add('answer-button');
+      answerOption.addEventListener('click', checkAnswer); //cada opcion debe verificarse con un evento ---de aqui, salta a la siguiente funcion para verificar la respuesta
+      answersContainerElement.append(answerOption);
+    });
 
   startTimer(); //cuenta regresiva
 };
@@ -1470,7 +1472,7 @@ const checkCategorySelection = () => {
   } else {
     anyCategorySelected = true; // Si no hay temas seleccionados
 
-    //nuevo banco de preguntas
+    //nuevo banco de preguntas //este deberia ser while para asegurarme que no sea la misma pregunta
     checkboxes.forEach(checkbox => {
       const category = checkbox.value; // detecta el nombre de la categoria
       const questionsFromCategory = QUESTIONS[category]; // separa esas preguntas

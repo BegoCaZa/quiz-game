@@ -100,7 +100,7 @@ body {
 .categories-container {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 25px;
+  gap: 18px;
 }
 
 /* checkbox */
@@ -109,6 +109,8 @@ body {
 }
 
 .checkbox-label {
+  display: flex;
+  justify-content: center;
   background-color: #9f9f9f;
   padding: 8px 10px;
   border-radius: 10px;
@@ -173,6 +175,7 @@ body {
   border: solid 2px #696969;
   border-radius: 10px;
   padding: 10px 20px;
+  margin: 0;
 }
 
 .hide {
