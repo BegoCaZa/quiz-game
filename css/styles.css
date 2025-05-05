@@ -212,7 +212,6 @@ body {
   color: black;
   font-size: 18px;
   font-weight: 500;
-  border: 3px solid var(--color-babyBlue);
   border-radius: 10px;
   padding: 10px;
 }
