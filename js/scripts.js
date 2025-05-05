@@ -1446,6 +1446,18 @@ const getCurrentQuestion = () => {
 
 const getRandomQuestions = () => {
   randomQuestions = [...selectedQuestions].sort(() => Math.random() - 0.5); //clona el array de preguntas seleccionadas y lo revuelve
+
+  while (randomQuestions.length < numberOfQuestions) {
+    //si el array de preguntas aleatorias es menor que el numero de preguntas seleccionadas
+    const randomIndex = Math.floor(Math.random() * selectedQuestions.length); //genera un numero aleatorio
+    const randomQuestion = selectedQuestions[randomIndex]; //pregunta aleatoria
+
+    if (!randomQuestions.includes(randomQuestion)) {
+      //si la pregunta aleatoria no esta en el array de preguntas aleatorias
+      randomQuestions.push(randomQuestion); //la agrega al array de preguntas aleatorias
+    }
+  }
+
   //cortar ese array hasta el numero de preguntas seleccionadas
   randomQuestions = randomQuestions.slice(0, numberOfQuestions);
 
@@ -1477,7 +1489,7 @@ const checkCategorySelection = () => {
       const category = checkbox.value; // detecta el nombre de la categoria
       const questionsFromCategory = QUESTIONS[category]; // separa esas preguntas
       selectedQuestions.push(...questionsFromCategory); // mete las preguntas al array de preguntas seleccionadas
-    }); //yei creo que si sirveee wuuu me la pela la infeccion
+    });
   }
 
   console.log(selectedQuestions); //array de preguntas seleccionadas
