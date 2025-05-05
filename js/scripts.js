@@ -1366,9 +1366,9 @@ const showResults = () => {
   gameViewElement.classList.add('hide'); //oculta la vista de juego
   resultsViewElement.classList.remove('hide'); //muestra la vista de resultados
 
-  correctAnswersElement.textContent = correctAnswers; //muestra el contador de respuestas correctas
-  incorrectAnswersElement.textContent = incorrectAnswers; //muestra el contador de respuestas incorrectas
-  unansweredElement.textContent = unanswered; //muestra el contador de preguntas sin responder
+  correctAnswersElement.textContent = `Correctas: ${correctAnswers}`; //muestra el contador de respuestas correctas
+  incorrectAnswersElement.textContent = `Incorrectas: ${incorrectAnswers}`; //muestra el contador de respuestas incorrectas
+  unansweredElement.textContent = `Sin respuesta: ${unanswered}`; //muestra el contador de preguntas sin responder
 
   restartButtonElement.addEventListener('click', restartGame); //reinicia el juego
 };
